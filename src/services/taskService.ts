@@ -1,5 +1,4 @@
 import { writeFile, readFile } from "fs/promises";
-import { json } from "stream/consumers";
 
 const dataFile = "./src/data/tasks.json";
 
