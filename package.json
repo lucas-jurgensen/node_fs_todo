@@ -1,7 +1,7 @@
 {
     "name": "node_fs_todo",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "./src/server.ts",
     "scripts": {
         "dev": "node --import=tsx --watch ./src/server.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
