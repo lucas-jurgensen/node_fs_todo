@@ -41,7 +41,7 @@ POST `/task`
 
 ---
 
-PUT `/task?id`
+PUT `/task/:id`
 - Atualiza uma tarefa existente com base no ID fornecido.
 - Parâmetros:
     - `id`: ID da tarefa que será atualizada.
@@ -62,7 +62,7 @@ PUT `/task?id`
 
 ---
 
-DELETE `/task/:id`
+DELETE `/task?id`
 - Deleta uma tarefa específica com base no ID fornecido.
 - Parâmetros:
     - `id`: ID da tarefa que será deletada.
