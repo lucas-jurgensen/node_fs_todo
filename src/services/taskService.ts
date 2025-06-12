@@ -28,7 +28,7 @@ export const updateTask = async (id: number, updatedTask: string) => {
 
     if (!task) throw new Error("tarefa não encontrada");
 
-    await db.run("UPDATE tasks SET task = ? WHERE id = ?", updateTask, id);
+    await db.run("UPDATE tasks SET task = ? WHERE id = ?", updatedTask, id);
 
-    return { ...task, task: updateTask };
+    return { ...task, task: updatedTask };
 };

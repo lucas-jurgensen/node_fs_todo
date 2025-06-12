@@ -30,7 +30,7 @@ export const handleCreateTask: RequestHandler = async (req, res) => {
 
 export const handleDeleteTask: RequestHandler = async (req, res) => {
     try {
-        const idRaw = req.query.id || req.params.id;
+        const idRaw = req.query.id;
         const id = Number(idRaw);
 
         if (!idRaw || isNaN(id)) {
