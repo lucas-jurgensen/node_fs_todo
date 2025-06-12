@@ -14,11 +14,11 @@ export const createTask = async (task: string) => {
 
 export const deleteTask = async (id: number) => {
     const db = getDB();
-    const task = await db.get("SELECT * FROM tasks WHERE id = ?, id");
+    const task = await db.get("SELECT * FROM tasks WHERE id = ?", id);
 
     if (!task) throw new Error("tarefa não encontrada");
 
-    await db.run("DELETE FROM task WHERE id = ?", id);
+    await db.run("DELETE FROM tasks WHERE id = ?", id);
     return task;
 };
 
@@ -28,7 +28,7 @@ export const updateTask = async (id: number, updatedTask: string) => {
 
     if (!task) throw new Error("tarefa não encontrada");
 
-    await db.run("UPDATE tasks SET tasks = ? WHERE id = ?", updateTask, id);
+    await db.run("UPDATE tasks SET task = ? WHERE id = ?", updateTask, id);
 
     return { ...task, task: updateTask };
 };
