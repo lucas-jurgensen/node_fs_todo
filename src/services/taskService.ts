@@ -1,55 +1,34 @@
-import { writeFile, readFile } from "fs/promises";
-
-const dataFile = "./src/data/tasks.json";
+import { getDB } from "../data/database";
 
 export const getTasks = async () => {
-    const data = await readFile(dataFile, "utf-8");
-    const tasks = JSON.parse(data);
-
+    const db = getDB();
+    const tasks = await db.all("SELECT * FROM tasks");
     return tasks;
 };
 
 export const createTask = async (task: string) => {
-    const tasks = await getTasks();
-    const newID = tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1;
-
-    const newTask = {
-        id: newID,
-        task,
-    };
-
-    tasks.push(newTask);
-    await writeFile(dataFile, JSON.stringify(tasks, null, 2));
-
-    return newID;
+    const db = getDB();
+    const result = await db.run("INSERT INTO tasks (task) VALUES (?)", task);
+    return result.lastID;
 };
 
-export const deleteTask = async (id) => {
-    const tasks = await getTasks();
+export const deleteTask = async (id: number) => {
+    const db = getDB();
+    const task = await db.get("SELECT * FROM tasks WHERE id = ?, id");
 
-    const taskToDelete = tasks.find((task) => task.id === Number(id));
+    if (!task) throw new Error("tarefa não encontrada");
 
-    if (!taskToDelete) {
-        throw new Error("tarefa não encontrada");
-    }
-
-    const attTasks = tasks.filter((task) => task.id !== Number(id));
-    await writeFile(dataFile, JSON.stringify(attTasks, null, 2));
-
-    return taskToDelete;
+    await db.run("DELETE FROM task WHERE id = ?", id);
+    return task;
 };
 
-export const updateTask = async (id, updatedTask: string) => {
-    const tasks = await getTasks();
+export const updateTask = async (id: number, updatedTask: string) => {
+    const db = getDB();
+    const task = await db.get("SELECT * FROM tasks WHERE id = ?", id);
 
-    const taskToUpdate = tasks.find((task) => task.id === Number(id));
+    if (!task) throw new Error("tarefa não encontrada");
 
-    if (!taskToUpdate) {
-        throw new Error("tarefa não encontrada");
-    }
+    await db.run("UPDATE tasks SET tasks = ? WHERE id = ?", updateTask, id);
 
-    taskToUpdate.task = updatedTask;
-
-    await writeFile(dataFile, JSON.stringify(tasks, null, 2));
-    return taskToUpdate;
+    return { ...task, task: updateTask };
 };
