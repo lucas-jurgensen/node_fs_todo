@@ -3,6 +3,10 @@ import { handleCreateTask, handleDeleteTask, handleGetTasks, handleUpdateTask } 
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+    res.json({ message: "api funcionando" });
+});
+
 router.get("/tasks", handleGetTasks);
 
 router.post("/task", handleCreateTask);

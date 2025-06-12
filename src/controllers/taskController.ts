@@ -15,8 +15,8 @@ export const handleCreateTask: RequestHandler = async (req, res) => {
     try {
         const { task } = req.body;
 
-        if (!task) {
-            res.status(400).json({ error: "precisa criar uma task" });
+        if (!task || typeof task !== "string") {
+            res.status(400).json({ error: "precisa criar uma task válida" });
             return;
         }
 
@@ -30,10 +30,11 @@ export const handleCreateTask: RequestHandler = async (req, res) => {
 
 export const handleDeleteTask: RequestHandler = async (req, res) => {
     try {
-        const { id } = req.query;
+        const idRaw = req.query.id;
+        const id = Number(idRaw);
 
-        if (!id || isNaN(Number(id))) {
-            res.status(400).json({ error: "id inválido" });
+        if (!idRaw || isNaN(id)) {
+            res.status(400).json({ error: "ID inválido" });
             return;
         }
 
@@ -43,18 +44,24 @@ export const handleDeleteTask: RequestHandler = async (req, res) => {
             task: deletedTask,
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({ error: "erro ao deletar tarefa" });
     }
 };
 
 export const handleUpdateTask: RequestHandler = async (req, res) => {
     try {
-        const { id } = req.params;
+        const idRaw = req.params.id;
+        const id = Number(idRaw);
         const { task } = req.body;
 
-        if (!task) {
-            res.status(400).json({ erro: "atualização de tarefa invalida" });
+        if (!task || typeof task !== "string") {
+            res.status(400).json({ error: "atualização de tarefa inválida" });
+            return;
+        }
+
+        if (!idRaw || isNaN(id)) {
+            res.status(400).json({ error: "ID inválido" });
             return;
         }
 
@@ -64,7 +71,7 @@ export const handleUpdateTask: RequestHandler = async (req, res) => {
             task: updatedTask,
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(500).json({ error: "erro ao atualizar a tarefa" });
     }
 };
