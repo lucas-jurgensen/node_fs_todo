@@ -1,10 +1,9 @@
 # TO-DO List API
-A To-Do List API é uma RESTful API construída com Node.js e Express, permitindo gerenciar uma lista de tarefas. O projeto realiza operações básicas de CRUD (Criar, Ler, Atualizar e Deletar) em tarefas. Essa API é ideal para quem deseja uma solução simples e leve para gerenciamento de tarefas.
-
+A To-Do List API é uma RESTful API construída com Node.js, Express e SQLite, permitindo gerenciar uma lista de tarefas. O projeto realiza operações básicas de CRUD (Criar, Ler, Atualizar e Deletar) em tarefas utilizando banco de dados SQLite. É uma solução simples, leve e robusta para gerenciamento de tarefas com persistência de dados.
 
 # Endpoints da API
 GET `/tasks`
-- Lista todas as tarefas armazenadas no arquivo JSON.
+- Lista todas as tarefas armazenadas no banco de dados.
 - Resposta de Sucesso:
     ```json
     [
@@ -23,7 +22,7 @@ GET `/tasks`
 ---
 
 POST `/task`
-- Cria uma nova tarefa e a adiciona ao arquivo JSON.
+- Cria uma nova tarefa e a adiciona ao banco de dados.
 - Body:
     ```json
     {
